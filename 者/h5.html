@@ -3,6 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <style type="text/css">
+          /*大屏幕*/
+      @media screen and (min-width: 1200px) {
+          body {
+              background-color: brown;
+          }
+      }
+      /*平板电脑与小屏电脑之间的分辨率*/
+      @media screen and (min-width: 768px) and (max-width:979px) {
+          body {
+              background-color: blue;
+          }
+      }
+      /*横向放置的手机和竖向放置的平板之间的分辨率*/
+      @media screen and (max-width:767px) {
+          body {
+              background-color: blueviolet;
+          }
+      }
+      /*竖向放置的手机以及分别率*/
+      @media screen and (max-width: 480px) {
+          body {
+              background-color: black;
+          }
+      }
+  </style>
 </head>
 <body>
                <input type="range" name="points" min="1" max="10">
