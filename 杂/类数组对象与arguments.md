@@ -182,13 +182,3 @@ function f(num){
 }
 console.log(f(4)); //24
 ```
-
- 
-
- 
-
- 
-
- 
-
- 
