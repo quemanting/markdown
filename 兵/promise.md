@@ -1,5 +1,11 @@
 ## Promise
 
+![03](E:\learn\TC\兵\03.png)
+
+
+
+
+
 ![02](E:\learn\TC\兵\02.png)
 
 - Promise是一个构造函数，是异步编程的一种解决方案。
@@ -156,8 +162,7 @@ function getNumber(){
     });
     return p;            
 }
-getNumber()
-.then(
+getNumber().then(
     function(data){
         console.log('resolved');
         console.log(data);
@@ -211,3 +216,49 @@ ReferenceError: somedata is not defined
     at <anonymous>
 ```
 
+## all的用法
+
+​	Promise的all方法提供了并行执行异步操作的能力，并且在所有异步操作执行完后才执行回调。我们仍旧使用上面定义好的runAsync1、runAsync2、runAsync3这三个函数，看下面的例子： 
+
+```javascript
+Promise
+.all([runAsync1(), runAsync2(), runAsync3()])
+.then(function(results){
+    console.log(results);
+});
+```
+
+​	用 Promise.all 来执行，all 接收一个数组参数，里面的值最终都算返回 Promise 对象。这样，三个异步操作的并行执行的，等到它们都执行完后才会进到then里面。那么，三个异步操作返回的数据哪里去了呢？都在 then 里面呢，all 会把所有异步操作的结果放进一个数组中传给 then，就是上面的results。所以上面代码的输出结果就是：  
+
+```javascript
+异步任务1执行完成
+异步任务2执行完成
+异步任务3执行完成
+(3) ["数据1", "数据2", "数据3"]
+```
+
+## race的用法
+
+​	all 方法的效果实际上是「谁跑的慢，以谁为准执行回调」，那么相对的就有另一个方法「谁跑的快，以谁为准执行回调」，这就是 race 方法，这个词本来就是赛跑的意思。race 的用法与all一样，我们把上面 runAsync1 的延时改为1秒来看一下： 
+
+```javascript
+Promise
+.race([runAsync1(), runAsync2(), runAsync3()])
+.then(function(results){
+    console.log(results);
+});
+```
+
+​	在 then 里面的回调开始执行时，runAsync2() 和 runAsync3() 并没有停止，仍旧再执行。 
+
+## Promise.reject和Promise.resolve
+
+MDN的解释如下：
+
+- `Promise.reject(reason)`
+
+  ​	返回一个状态为失败的 Promise 对象，并将给定的失败信息传递给对应的处理方法
+
+- `Promise.resolve(value)`
+
+  ​	返回一个状态由给定 value 决定的 Promise 对象。如果该值是一个 Promise 对象，则直接返回该对象；如果该值是 thenable (即，带有then方法的对象)，返回的 Promise 对象的最终状态由 then方法执行决定；否则的话(该 value 为空，基本类型或者不带 then 方法的对象),返回的 Promise 对象状态为 fulfilled，并且将该 value 传递给对应的 then 方法。通常而言，如果你不知道一个值是否是Promise 对象，使用 Promise.resolve(value) 来返回一个Promise对象,这样就能将该 value 以Promise对象形式使用。
